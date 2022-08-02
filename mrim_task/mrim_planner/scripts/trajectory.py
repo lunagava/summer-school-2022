@@ -192,22 +192,20 @@ class TrajectoryUtils():
             # interpolate headings
             for i in range(1, len(subtraj) - 1):
 
+                # get segment points and distance
                 subtraj_0 = subtraj[i - 1].point
                 subtraj_1 = subtraj[i].point
+                dist_01 = distEuclidean(subtraj_0, subtraj_1)
 
-                # [STUDENTS TODO, COMPULSORY] Implement heading interpolation here
-                # Tips:
-                #  - interpolate the heading linearly (create a function of distance between two points of the subpath)
-                #  - do not forget to wrap angle to <-pi, pi) (see/use wrapAngle() in utils.py)
-
-                # [STUDENTS TODO] Change variable 'hdg_interp', nothing else
-                hdg_interp = waypoints[0].heading
-
+                # get linear interpolation as function of relative distance between two points
+                hdg_interp = hdg_from + (dist_01/subtraj_len)*d_hdg
+                hdg_interp = unwrapAngle(hdg_interp)
+                
                 # replace heading
                 hdg_from   = hdg_interp
                 wp         = subtraj[i]
                 wp.heading = hdg_interp
-                wps_interp.append(wp)
+                wps_interp.append(wp)            
 
         # include the very last node
         wps_interp.append(waypoints[-1])
