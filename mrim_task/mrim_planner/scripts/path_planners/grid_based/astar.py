@@ -88,7 +88,7 @@ class AStar():
         pt1 = path[0][0:3]
         pt2 = path[-1][0:3]
         if len(path) <= 2:
-            return path, path_distance
+            return path
         dist_subpath = 0.0
         while dist_subpath < path_distance*ratio:
             for i in range(1, len(path)):
