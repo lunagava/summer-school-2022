@@ -446,30 +446,20 @@ class TrajectoryUtils():
 
             sampling_step = trajectory.dT
 
-            # STUDENTS TODO: Sample the path parametrization 'toppra_trajectory' (instance of TOPPRA library).
-            #raise NotImplementedError('[STUDENTS TODO] Trajectory sampling not finished. You have to implement it on your own.')
+            # STUDENTS : Sample the path parametrization 'toppra_trajectory' (instance of TOPPRA library).
+            #raise NotImplementedError('[STUDENTS ] Trajectory sampling not finished. You have to implement it on your own.')
             # Tips:
             #  - check documentation for TOPPRA (look for eval() function): https://hungpham2511.github.io/toppra/index.html
             #  - use 'toppra_trajectory' and the predefined sampling step 'sampling_step'
 
-            #samples = [] # [STUDENTS TODO] Fill this variable with trajectory samples
-
-            #print("aaaaaaaaaaaaaa")
-            #print(toppra_trajectory.duration)
-            #print(sampling_step)
+            #samples = [] # [STUDENTS] Fill this variable with trajectory samples
 
             ts_sample = np.linspace(0, toppra_trajectory.duration, math.ceil(toppra_trajectory.duration/sampling_step))
-            #print(ts_sample)
-
             samples = toppra_trajectory(ts_sample)
-            #print(samples)
 
             # Convert to Trajectory class
             poses      = [Pose(q[0], q[1], q[2], q[3]) for q in samples]
             trajectory = self.posesToTrajectory(poses)
-            
-            #print(trajectory)
-
 
         return trajectory
     # #}
@@ -575,9 +565,17 @@ class TrajectoryUtils():
 
         wp_lists   = [wp.asList() for wp in waypoints]
         path       = ta.SplineInterpolator(np.linspace(0, 1, len(waypoints)), wp_lists)
+        #v_lims[0] = v_lims[0] * 0.8
+        #v_lims[1] = v_lims[1] * 0.8
+        #v_lims[2] = v_lims[2] * 0.8
+        #v_lims[3] = v_lims[3] * 0.8
+
         pc_vel     = constraint.JointVelocityConstraint(v_lims)
         pc_acc     = constraint.JointAccelerationConstraint(a_lims)
-        instance   = algo.TOPPRA([pc_vel, pc_acc], path, parametrizer="ParametrizeConstAccel")
+        gridpoints = np.linspace(0, path.duration, 10*len(waypoints))
+        instance   = algo.TOPPRA([pc_vel, pc_acc], path, parametrizer="ParametrizeConstAccel", gridpoints=gridpoints)
+        print("aaaaaaaaaaaaaaaaaa")
+        print(len(instance.gridpoints))
         trajectory = instance.compute_trajectory()
 
         return trajectory

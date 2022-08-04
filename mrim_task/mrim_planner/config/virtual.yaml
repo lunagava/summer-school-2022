@@ -1,5 +1,5 @@
 problem:
-  name: "single_tower.problem" # [single_tower.problem, four_towers_small.problem, four_towers_large.problem]
+  name: "four_towers_small.problem" # [single_tower.problem, four_towers_small.problem, four_towers_large.problem]
   plot: False
 
 # Parameters for Traveling Salesman Problem
@@ -25,7 +25,7 @@ path_planner:
 
   # A* method parameters
   astar:
-    grid_resolution: 0.3 # (m)
+    grid_resolution: 0.5 # (m)
 
 # Parameters for path smoothing
 path_smoothing:
@@ -34,7 +34,7 @@ path_smoothing:
 
 # Parameters for sampling the UAVs' trajectories
 trajectory_sampling:
-  with_stops: true # [STUDENTS TODO: implement better method than the default] If true, UAVs will stop at each waypoint (default: true)
+  with_stops: false # [STUDENTS: implement better method than the default] If true, UAVs will stop at each waypoint (default: true)
 
 # Parameters for UAV-to-UAV collision avoidance
 collision_avoidance:
