@@ -34,4 +34,4 @@ trajectory_sampling:
 
 # Parameters for UAV-to-UAV collision avoidance
 collision_avoidance:
-  method: 'none' # [STUDENTS TODO: implement better method than the default] [none (default), delay_2nd_till_1st_UAV_finishes, delay_till_no_collisions_occur]
+  method: 'delay_till_no_collisions_occur' # [STUDENTS]: implement better method than the default] [none (default), delay_2nd_till_1st_UAV_finishes, delay_till_no_collisions_occur]
